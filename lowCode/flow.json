@@ -1,1 +1,415 @@
-[{"id":"3b5c5ae29c5a5493","type":"tab","label":"Flow 1","disabled":false,"info":"","env":[]},{"id":"3545c2353381e343","type":"function","z":"3b5c5ae29c5a5493","name":"RiskAnalysis","func":"var temperatura = parseFloat(msg.payload.t); // Certifique-se de que o valor seja numérico\nvar umidade = parseFloat(msg.payload.u);     // Certifique-se de que o valor seja numérico\nvar sensor = \"A\";\n\nvar message = \"\";\n\n// Verifica se temperatura e umidade são números válidos\nif (isNaN(temperatura) || isNaN(umidade)) {\n    message = `Erro: Valores inválidos para temperatura ou umidade no sensor ${sensor}.`;\n} else {\n    // Calcula o índice de risco\n    var riskIndex = (0.7 * temperatura) + (0.3 * (100 - umidade));\n\n    // Determinar o nível de risco baseado no índice de risco\n    if (riskIndex < 30) {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nBaixo risco detectado no sensor ${sensor}.`;\n    } else if (riskIndex >= 30 && riskIndex < 50) {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nRisco Moderado detectado no sensor ${sensor}.`;\n    } else if (riskIndex >= 50 && riskIndex < 70) {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nRisco Elevado detectado no sensor ${sensor}.`;\n    } else {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nRisco Extremo detectado no sensor ${sensor}.`;\n    }\n}\n\nmsg.payload = message;\nreturn msg;\n","outputs":1,"timeout":0,"noerr":0,"initialize":"","finalize":"","libs":[],"x":410,"y":160,"wires":[["1a10b74c878e3c3f","05e9deda4f294104"]]},{"id":"1a10b74c878e3c3f","type":"node-red-contrib-whatsapp-cmb-send-message","z":"3b5c5ae29c5a5493","name":"Rafael","credtype":"account","account":"37118e4e0c65715a","text":"payload","phonenumbervalue":"5511981237800","apikeyvalue":"7458449","apikeyinputtypemessage":"msg","phonenumberinputtypemessage":"flow","inputtypemessage":"msg","rejectssl":false,"x":550,"y":160,"wires":[["877a78a14541b977"]]},{"id":"877a78a14541b977","type":"debug","z":"3b5c5ae29c5a5493","name":"debug 1","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","statusVal":"","statusType":"auto","x":680,"y":160,"wires":[]},{"id":"86f37f4d4c6b1253","type":"mqtt in","z":"3b5c5ae29c5a5493","name":"temp_umid","topic":"TemperaturaUmidade","qos":"0","datatype":"json","broker":"9b3bbe98721f9d56","nl":false,"rap":true,"rh":0,"inputs":0,"x":200,"y":120,"wires":[["bf44b7e0a1a7d0da","3545c2353381e343","461b39023a93ae23"]]},{"id":"bf44b7e0a1a7d0da","type":"function","z":"3b5c5ae29c5a5493","name":"InfluxFilterA","func":"var temperatura = msg.payload.t;\n\nmsg.payload = temperatura\n\nreturn msg;","outputs":1,"timeout":0,"noerr":0,"initialize":"","finalize":"","libs":[],"x":410,"y":20,"wires":[["eef5184702af93e1"]]},{"id":"eef5184702af93e1","type":"influxdb out","z":"3b5c5ae29c5a5493","influxdb":"9b2e5019267ea417","name":"","measurement":"temperaturaA","precision":"","retentionPolicy":"","database":"database","precisionV18FluxV20":"ms","retentionPolicyV18Flux":"","org":"Atividade6","bucket":"sensor_data","x":600,"y":20,"wires":[]},{"id":"05e9deda4f294104","type":"debug","z":"3b5c5ae29c5a5493","name":"debug 3","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","statusVal":"","statusType":"auto","x":560,"y":220,"wires":[]},{"id":"8f02c59aeee82e44","type":"function","z":"3b5c5ae29c5a5493","name":"RiskAnalysis","func":"var temperatura = parseFloat(msg.payload.t); // Certifique-se de que o valor seja numérico\nvar umidade = parseFloat(msg.payload.u);     // Certifique-se de que o valor seja numérico\nvar sensor = \"B\";\n\nvar message = \"\";\n\n// Verifica se temperatura e umidade são números válidos\nif (isNaN(temperatura) || isNaN(umidade)) {\n    message = `Erro: Valores inválidos para temperatura ou umidade no sensor ${sensor}.`;\n} else {\n    // Calcula o índice de risco\n    var riskIndex = (0.7 * temperatura) + (0.3 * (100 - umidade));\n\n    // Determinar o nível de risco baseado no índice de risco\n    if (riskIndex < 30) {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nBaixo risco detectado no sensor ${sensor}.`;\n    } else if (riskIndex >= 30 && riskIndex < 50) {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nRisco Moderado detectado no sensor ${sensor}.`;\n    } else if (riskIndex >= 50 && riskIndex < 70) {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nRisco Elevado detectado no sensor ${sensor}.`;\n    } else {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nRisco Extremo detectado no sensor ${sensor}.`;\n    }\n}\n\nmsg.payload = message;\nreturn msg;\n","outputs":1,"timeout":0,"noerr":0,"initialize":"","finalize":"","libs":[],"x":410,"y":400,"wires":[["72cc9163fcbb5c50","fecc272d57d94a3b"]]},{"id":"72cc9163fcbb5c50","type":"node-red-contrib-whatsapp-cmb-send-message","z":"3b5c5ae29c5a5493","name":"Hyandra","credtype":"account","account":"4453840e8cd53bf7","text":"payload","phonenumbervalue":"5511981237800","apikeyvalue":"7458449","apikeyinputtypemessage":"msg","phonenumberinputtypemessage":"flow","inputtypemessage":"msg","rejectssl":false,"x":560,"y":400,"wires":[["81744bd56b4eff01"]]},{"id":"81744bd56b4eff01","type":"debug","z":"3b5c5ae29c5a5493","name":"debug 4","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","statusVal":"","statusType":"auto","x":700,"y":400,"wires":[]},{"id":"fecc272d57d94a3b","type":"debug","z":"3b5c5ae29c5a5493","name":"debug 5","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","statusVal":"","statusType":"auto","x":560,"y":340,"wires":[]},{"id":"461b39023a93ae23","type":"function","z":"3b5c5ae29c5a5493","name":"InfluxFilterA","func":"var umidade = msg.payload.u;\n\nmsg.payload = umidade\n\nreturn msg;","outputs":1,"timeout":0,"noerr":0,"initialize":"","finalize":"","libs":[],"x":410,"y":60,"wires":[["e6979adf8f6ba465"]]},{"id":"e6979adf8f6ba465","type":"influxdb out","z":"3b5c5ae29c5a5493","influxdb":"9b2e5019267ea417","name":"","measurement":"umidadeA","precision":"","retentionPolicy":"","database":"database","precisionV18FluxV20":"ms","retentionPolicyV18Flux":"","org":"Atividade6","bucket":"sensor_data","x":590,"y":60,"wires":[]},{"id":"b52f7ab62ac3b008","type":"mqtt in","z":"3b5c5ae29c5a5493","name":"temp_umid","topic":"TemperaturaUmidadeB","qos":"0","datatype":"json","broker":"9b3bbe98721f9d56","nl":false,"rap":true,"rh":0,"inputs":0,"x":200,"y":400,"wires":[["8f02c59aeee82e44","82adabc3c94395c2","1b086db3d505a08b"]]},{"id":"1b086db3d505a08b","type":"function","z":"3b5c5ae29c5a5493","name":"InfluxFilterB","func":"var temperatura = msg.payload.t;\n\nmsg.payload = temperatura\n\nreturn msg;","outputs":1,"timeout":0,"noerr":0,"initialize":"","finalize":"","libs":[],"x":410,"y":480,"wires":[["9ed96f77ec11600f"]]},{"id":"9ed96f77ec11600f","type":"influxdb out","z":"3b5c5ae29c5a5493","influxdb":"9b2e5019267ea417","name":"","measurement":"temperaturaB","precision":"","retentionPolicy":"","database":"database","precisionV18FluxV20":"ms","retentionPolicyV18Flux":"","org":"Atividade6","bucket":"sensor_data","x":600,"y":480,"wires":[]},{"id":"82adabc3c94395c2","type":"function","z":"3b5c5ae29c5a5493","name":"InfluxFilterB","func":"var umidade = msg.payload.u;\n\nmsg.payload = umidade\n\nreturn msg;","outputs":1,"timeout":0,"noerr":0,"initialize":"","finalize":"","libs":[],"x":410,"y":520,"wires":[["93fc9a203b2b422f"]]},{"id":"93fc9a203b2b422f","type":"influxdb out","z":"3b5c5ae29c5a5493","influxdb":"9b2e5019267ea417","name":"","measurement":"umidadeB","precision":"","retentionPolicy":"","database":"database","precisionV18FluxV20":"ms","retentionPolicyV18Flux":"","org":"Atividade6","bucket":"sensor_data","x":590,"y":520,"wires":[]},{"id":"37118e4e0c65715a","type":"node-red-contrib-whatsapp-cmb-account","name":"rafael"},{"id":"9b3bbe98721f9d56","type":"mqtt-broker","name":"","broker":"8705b916cfd244dbbbd48c1f80e4d71a.s1.eu.hivemq.cloud","port":"8883","tls":"","clientid":"NodeRed_Client_01","autoConnect":true,"usetls":true,"protocolVersion":"4","keepalive":"60","cleansession":true,"autoUnsubscribe":true,"birthTopic":"Conn","birthQos":"0","birthRetain":"false","birthPayload":"Connected","birthMsg":{},"closeTopic":"","closeQos":"0","closeRetain":"false","closePayload":"","closeMsg":{},"willTopic":"","willQos":"0","willRetain":"false","willPayload":"","willMsg":{},"userProps":"","sessionExpiry":""},{"id":"9b2e5019267ea417","type":"influxdb","hostname":"http://54.211.225.142","port":"8086","protocol":"http","database":"temperatura","name":"db","usetls":false,"tls":"","influxdbVersion":"2.0","url":"https://us-east-1-1.aws.cloud2.influxdata.com:8086","timeout":"10","rejectUnauthorized":false},{"id":"4453840e8cd53bf7","type":"node-red-contrib-whatsapp-cmb-account","name":"hyandra"}]
+[
+    {
+        "id": "3b5c5ae29c5a5493",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3545c2353381e343",
+        "type": "function",
+        "z": "3b5c5ae29c5a5493",
+        "name": "RiskAnalysis",
+        "func": "var temperatura = parseFloat(msg.payload.t); // Certifique-se de que o valor seja numérico\nvar umidade = parseFloat(msg.payload.u);     // Certifique-se de que o valor seja numérico\nvar sensor = \"A\";\n\nvar message = \"\";\n\n// Verifica se temperatura e umidade são números válidos\nif (isNaN(temperatura) || isNaN(umidade)) {\n    message = `Erro: Valores inválidos para temperatura ou umidade no sensor ${sensor}.`;\n} else {\n    // Calcula o índice de risco\n    var riskIndex = (0.7 * temperatura) + (0.3 * (100 - umidade));\n\n    // Determinar o nível de risco baseado no índice de risco\n    if (riskIndex < 30) {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nBaixo risco detectado no sensor ${sensor}.`;\n    } else if (riskIndex >= 30 && riskIndex < 50) {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nRisco Moderado detectado no sensor ${sensor}.`;\n    } else if (riskIndex >= 50 && riskIndex < 70) {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nRisco Elevado detectado no sensor ${sensor}.`;\n    } else {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nRisco Extremo detectado no sensor ${sensor}.`;\n    }\n}\n\nmsg.payload = message;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "1a10b74c878e3c3f",
+                "05e9deda4f294104"
+            ]
+        ]
+    },
+    {
+        "id": "1a10b74c878e3c3f",
+        "type": "node-red-contrib-whatsapp-cmb-send-message",
+        "z": "3b5c5ae29c5a5493",
+        "name": "Rafael",
+        "credtype": "account",
+        "account": "37118e4e0c65715a",
+        "text": "payload",
+        "phonenumbervalue": "5511981237800",
+        "apikeyvalue": "7458449",
+        "apikeyinputtypemessage": "msg",
+        "phonenumberinputtypemessage": "flow",
+        "inputtypemessage": "msg",
+        "rejectssl": false,
+        "x": 550,
+        "y": 160,
+        "wires": [
+            [
+                "877a78a14541b977"
+            ]
+        ]
+    },
+    {
+        "id": "877a78a14541b977",
+        "type": "debug",
+        "z": "3b5c5ae29c5a5493",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "86f37f4d4c6b1253",
+        "type": "mqtt in",
+        "z": "3b5c5ae29c5a5493",
+        "name": "temp_umid",
+        "topic": "TemperaturaUmidade",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "9b3bbe98721f9d56",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 120,
+        "wires": [
+            [
+                "bf44b7e0a1a7d0da",
+                "3545c2353381e343",
+                "461b39023a93ae23"
+            ]
+        ]
+    },
+    {
+        "id": "bf44b7e0a1a7d0da",
+        "type": "function",
+        "z": "3b5c5ae29c5a5493",
+        "name": "InfluxFilterA",
+        "func": "var temperatura = msg.payload.t;\n\nmsg.payload = temperatura\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 20,
+        "wires": [
+            [
+                "eef5184702af93e1"
+            ]
+        ]
+    },
+    {
+        "id": "eef5184702af93e1",
+        "type": "influxdb out",
+        "z": "3b5c5ae29c5a5493",
+        "influxdb": "9b2e5019267ea417",
+        "name": "",
+        "measurement": "temperaturaA",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "Atividade6",
+        "bucket": "sensor_data",
+        "x": 600,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "05e9deda4f294104",
+        "type": "debug",
+        "z": "3b5c5ae29c5a5493",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "8f02c59aeee82e44",
+        "type": "function",
+        "z": "3b5c5ae29c5a5493",
+        "name": "RiskAnalysis",
+        "func": "var temperatura = parseFloat(msg.payload.t); // Certifique-se de que o valor seja numérico\nvar umidade = parseFloat(msg.payload.u);     // Certifique-se de que o valor seja numérico\nvar sensor = \"B\";\n\nvar message = \"\";\n\n// Verifica se temperatura e umidade são números válidos\nif (isNaN(temperatura) || isNaN(umidade)) {\n    message = `Erro: Valores inválidos para temperatura ou umidade no sensor ${sensor}.`;\n} else {\n    // Calcula o índice de risco\n    var riskIndex = (0.7 * temperatura) + (0.3 * (100 - umidade));\n\n    // Determinar o nível de risco baseado no índice de risco\n    if (riskIndex < 30) {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nBaixo risco detectado no sensor ${sensor}.`;\n    } else if (riskIndex >= 30 && riskIndex < 50) {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nRisco Moderado detectado no sensor ${sensor}.`;\n    } else if (riskIndex >= 50 && riskIndex < 70) {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nRisco Elevado detectado no sensor ${sensor}.`;\n    } else {\n        message = `Índice: ${riskIndex.toFixed(2)}.\\n\\nRisco Extremo detectado no sensor ${sensor}.`;\n    }\n}\n\nmsg.payload = message;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 400,
+        "wires": [
+            [
+                "72cc9163fcbb5c50",
+                "fecc272d57d94a3b"
+            ]
+        ]
+    },
+    {
+        "id": "72cc9163fcbb5c50",
+        "type": "node-red-contrib-whatsapp-cmb-send-message",
+        "z": "3b5c5ae29c5a5493",
+        "name": "Hyandra",
+        "credtype": "account",
+        "account": "4453840e8cd53bf7",
+        "text": "payload",
+        "phonenumbervalue": "5511981237800",
+        "apikeyvalue": "7458449",
+        "apikeyinputtypemessage": "msg",
+        "phonenumberinputtypemessage": "flow",
+        "inputtypemessage": "msg",
+        "rejectssl": false,
+        "x": 560,
+        "y": 400,
+        "wires": [
+            [
+                "81744bd56b4eff01"
+            ]
+        ]
+    },
+    {
+        "id": "81744bd56b4eff01",
+        "type": "debug",
+        "z": "3b5c5ae29c5a5493",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "fecc272d57d94a3b",
+        "type": "debug",
+        "z": "3b5c5ae29c5a5493",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "461b39023a93ae23",
+        "type": "function",
+        "z": "3b5c5ae29c5a5493",
+        "name": "InfluxFilterA",
+        "func": "var umidade = msg.payload.u;\n\nmsg.payload = umidade\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 60,
+        "wires": [
+            [
+                "e6979adf8f6ba465"
+            ]
+        ]
+    },
+    {
+        "id": "e6979adf8f6ba465",
+        "type": "influxdb out",
+        "z": "3b5c5ae29c5a5493",
+        "influxdb": "9b2e5019267ea417",
+        "name": "",
+        "measurement": "umidadeA",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "Atividade6",
+        "bucket": "sensor_data",
+        "x": 590,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "b52f7ab62ac3b008",
+        "type": "mqtt in",
+        "z": "3b5c5ae29c5a5493",
+        "name": "temp_umid",
+        "topic": "TemperaturaUmidadeB",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "9b3bbe98721f9d56",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 400,
+        "wires": [
+            [
+                "8f02c59aeee82e44",
+                "82adabc3c94395c2",
+                "1b086db3d505a08b"
+            ]
+        ]
+    },
+    {
+        "id": "1b086db3d505a08b",
+        "type": "function",
+        "z": "3b5c5ae29c5a5493",
+        "name": "InfluxFilterB",
+        "func": "var temperatura = msg.payload.t;\n\nmsg.payload = temperatura\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 480,
+        "wires": [
+            [
+                "9ed96f77ec11600f"
+            ]
+        ]
+    },
+    {
+        "id": "9ed96f77ec11600f",
+        "type": "influxdb out",
+        "z": "3b5c5ae29c5a5493",
+        "influxdb": "9b2e5019267ea417",
+        "name": "",
+        "measurement": "temperaturaB",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "Atividade6",
+        "bucket": "sensor_data",
+        "x": 600,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "82adabc3c94395c2",
+        "type": "function",
+        "z": "3b5c5ae29c5a5493",
+        "name": "InfluxFilterB",
+        "func": "var umidade = msg.payload.u;\n\nmsg.payload = umidade\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 520,
+        "wires": [
+            [
+                "93fc9a203b2b422f"
+            ]
+        ]
+    },
+    {
+        "id": "93fc9a203b2b422f",
+        "type": "influxdb out",
+        "z": "3b5c5ae29c5a5493",
+        "influxdb": "9b2e5019267ea417",
+        "name": "",
+        "measurement": "umidadeB",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "Atividade6",
+        "bucket": "sensor_data",
+        "x": 590,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "37118e4e0c65715a",
+        "type": "node-red-contrib-whatsapp-cmb-account",
+        "name": "rafael"
+    },
+    {
+        "id": "9b3bbe98721f9d56",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "8705b916cfd244dbbbd48c1f80e4d71a.s1.eu.hivemq.cloud",
+        "port": "8883",
+        "tls": "",
+        "clientid": "NodeRed_Client_01",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "Conn",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "Connected",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "9b2e5019267ea417",
+        "type": "influxdb",
+        "hostname": "http://54.211.225.142",
+        "port": "8086",
+        "protocol": "http",
+        "database": "temperatura",
+        "name": "db",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "https://us-east-1-1.aws.cloud2.influxdata.com:8086",
+        "timeout": "10",
+        "rejectUnauthorized": false
+    },
+    {
+        "id": "4453840e8cd53bf7",
+        "type": "node-red-contrib-whatsapp-cmb-account",
+        "name": "hyandra"
+    }
+]
