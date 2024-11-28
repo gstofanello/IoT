@@ -1,7 +1,6 @@
 # IoT
 
 ## Monitoramento de Temperatura e Umidade em Grandes Áreas para Prevenção de Incêndios Utilizando IoT
-
 ###Gabriel Sanches, Hyandra Marjory, Rafael Pereira, Rodrigo Pampolin, Wallace Santana
 ###10410281@mackenzista.br, 10409444@mackenzista.br, 10409387@mackenzista.br, 10409775@mackenzista.br, 1165744@mackenzie.br
 
